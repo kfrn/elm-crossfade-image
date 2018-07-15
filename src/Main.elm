@@ -13,6 +13,7 @@ import Html.Events exposing (onClick)
 type alias Model =
     { img1 : Animation.Messenger.State Msg
     , img2 : Animation.Messenger.State Msg
+    , flag : Bool
     }
 
 
@@ -20,6 +21,7 @@ init : ( Model, Cmd Msg )
 init =
     ( { img1 = Animation.style [ Animation.opacity 1.0 ]
       , img2 = Animation.style [ Animation.opacity 0.0 ]
+      , flag = True
       }
     , Cmd.none
     )
@@ -48,36 +50,11 @@ update msg model =
 
         Crossfade ->
             let
-                newOpacity1 : Float
-                newOpacity1 =
-                    if isOpaque model.img1 then
-                        0.0
+                ( newOpacity1, newOpacity2 ) =
+                    if model.flag == True then
+                        ( 0, 1 )
                     else
-                        1.0
-
-                isOpaque : Animation.Messenger.State Msg -> Bool
-                isOpaque style =
-                    Debug.log "isOpaque" <| style == Animation.style [ Animation.opacity 1.0 ]
-
-                newOpacity2 : Float
-                newOpacity2 =
-                    if newOpacity1 == 1.0 then
-                        0.0
-                    else
-                        1.0
-
-                _ =
-                    Debug.log "img1" model.img1
-
-                --
-                -- _ =
-                --     Debug.log "newOpacity1" newOpacity1
-                --
-                -- _ =
-                --     Debug.log "img2" model.img2
-                --
-                -- _ =
-                --     Debug.log "newOpacity2" newOpacity2
+                        ( 1, 0 )
             in
             ( { model
                 | img1 =
@@ -92,6 +69,7 @@ update msg model =
                             [ Animation.opacity newOpacity2 ]
                         ]
                         model.img2
+                , flag = not model.flag
               }
             , Cmd.none
             )
@@ -113,7 +91,7 @@ view model =
             [ img (Animation.render model.img1 ++ [ src "./babooshka_double-bass.jpg" ]) []
             , img (Animation.render model.img2 ++ [ src "./babooshka_warrior.jpg" ]) []
             ]
-        , button [ class "button", onClick Crossfade ] [ text "Crossfade!" ]
+        , button [ class "button", onClick Crossfade ] [ text "Babooshka!" ]
         ]
 
 
