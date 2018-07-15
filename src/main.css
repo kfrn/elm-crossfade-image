@@ -1,0 +1,29 @@
+body {
+  font-family: "Source Sans Pro", "Trebuchet MS", "Lucida Grande",
+    "Bitstream Vera Sans", "Helvetica Neue", sans-serif;
+  margin: 0;
+  text-align: center;
+  color: #293c4b;
+}
+
+h1 {
+  font-size: 30px;
+  padding: 20px;
+}
+
+#kate-image {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#kate-image img {
+  position: absolute;
+  width: 500px;
+  left: 50%;
+  margin-left: -250px;
+}
+
+button {
+  margin-top: 400px;
+}
